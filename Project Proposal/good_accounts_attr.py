@@ -47,7 +47,7 @@ attributes = [
 ]
 
 # List of bots ID
-good_accounts = tweepy.Cursor(api.followers, screen_name="sktgater").items(70)
+good_accounts = tweepy.Cursor(api.followers, screen_name="sktgater").items(200)
 count = 0
 
 with open('good_accounts.csv', 'w') as table:
