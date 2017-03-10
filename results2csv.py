@@ -1,3 +1,5 @@
+import csv, tweepy
+
 consumer_key = ''
 consumer_secret = ''
 access_token = ''
@@ -28,19 +30,28 @@ attributes = [
 'name',
 ]
 
-users = tweepy.Cursor(api.followers, screen_name="mikupa55").items(100)
+userlist = []
 
-import csv
+with open("bot_account_list.txt") as f:
+    userlist = [line[:-1] for line in f]
+print(userlist)
+
+users = [api.get_user(username) for username in userlist]
+
 count = 0
-with open('test.csv', "w") as csvfile:
+with open('bot_acount.csv', "w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=attributes+['Bot'])
     writer.writeheader()
     for user in users:
+        x = {}
         try:
-            x = {attr : getattr(user,attr.lower()) for attr in attributes}
+            for attr in attributes:
+                x[attr] = getattr(user,attr.lower()) if attr != 'Status' else user.status._json
             x['Bot'] = True
             writer.writerow(x)
             count += 1
+            if count >= 50:
+                break
         except:
             continue
-    print(count)	#number of successful stored records
+    print(count) # number of successful stored records
