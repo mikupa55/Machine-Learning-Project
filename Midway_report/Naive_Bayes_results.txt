@@ -1,0 +1,6 @@
+$ python Naive_Bayes.py 
+Accuracy:  0.76
+Precision: 0.680555555556
+Recall: 0.98
+Fl: 0.803278688525
+AUC:  0.76
